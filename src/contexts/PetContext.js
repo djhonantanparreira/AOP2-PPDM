@@ -23,16 +23,6 @@ export const PetProvider = ({ children }) => {
     query: ''
   });
 
-  // Carregar todos os pets inicialmente
-  useEffect(() => {
-    loadPets();
-  }, []);
-
-  // Aplicar filtros quando mudarem
-  useEffect(() => {
-    applyFilters();
-  }, [filters, pets, applyFilters]);
-
   const loadPets = async () => {
     try {
       setLoading(true);
@@ -60,6 +50,16 @@ export const PetProvider = ({ children }) => {
       setLoading(false);
     }
   }, [filters]);
+
+  // Carregar todos os pets inicialmente
+  useEffect(() => {
+    loadPets();
+  }, []);
+
+  // Aplicar filtros quando mudarem
+  useEffect(() => {
+    applyFilters();
+  }, [filters, pets, applyFilters]);
 
   const getPetById = async (id) => {
     try {
