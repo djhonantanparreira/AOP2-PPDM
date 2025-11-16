@@ -1,4 +1,4 @@
-import React, { createContext, useState, useContext, useEffect } from 'react';
+import React, { createContext, useState, useContext, useEffect, useCallback } from 'react';
 import { PetService } from '../data/services/PetService';
 
 const PetContext = createContext();
@@ -31,7 +31,7 @@ export const PetProvider = ({ children }) => {
   // Aplicar filtros quando mudarem
   useEffect(() => {
     applyFilters();
-  }, [filters, pets]);
+  }, [filters, pets, applyFilters]);
 
   const loadPets = async () => {
     try {
@@ -48,7 +48,7 @@ export const PetProvider = ({ children }) => {
     }
   };
 
-  const applyFilters = async () => {
+  const applyFilters = useCallback(async () => {
     try {
       setLoading(true);
       const data = await PetService.searchPets(filters);
@@ -59,7 +59,7 @@ export const PetProvider = ({ children }) => {
     } finally {
       setLoading(false);
     }
-  };
+  }, [filters]);
 
   const getPetById = async (id) => {
     try {

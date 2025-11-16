@@ -24,7 +24,7 @@ export const SuccessModal = ({ visible, onClose, title, message }) => {
     } else {
       scaleValue.setValue(0);
     }
-  }, [visible]);
+  }, [visible, scaleValue]);
 
   return (
     <Modal

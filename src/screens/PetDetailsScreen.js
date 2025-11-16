@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -20,15 +20,15 @@ export const PetDetailsScreen = ({ route, navigation }) => {
   const [loading, setLoading] = useState(true);
   const [showFullDescription, setShowFullDescription] = useState(false);
 
-  useEffect(() => {
-    loadPetDetails();
-  }, [petId]);
-
-  const loadPetDetails = async () => {
+  const loadPetDetails = useCallback(async () => {
     const petData = await getPetById(petId);
     setPet(petData);
     setLoading(false);
-  };
+  }, [petId, getPetById]);
+
+  useEffect(() => {
+    loadPetDetails();
+  }, [petId, loadPetDetails]);
 
   const handleFavorite = async () => {
     await toggleFavorite(petId);
